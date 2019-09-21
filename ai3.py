@@ -154,8 +154,11 @@ class Puzzle: #  represents an 8 puzzle
         for row in self.board:
             yield from row
 
-
-board = [[1,2,3],[4,5,0],[6,7,8]]
+print('8-Puzzle A* Solver')
+print('Enter the puzzle you want to solve like this \'1 2 3 4 5 6 7 8 0\' with \'0\' being the empty space')
+puzzle = [int(x) for x in input().split()]
+board = [puzzle[0:3], puzzle[3:6], puzzle[6:9]]
+#board = [[2,0,5],[8,3,4],[7,6,1]]
 puzzle = Puzzle(board)
 #puzzle = puzzle.shuffle()
 s = Solver(puzzle)
