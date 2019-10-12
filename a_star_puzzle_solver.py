@@ -115,10 +115,18 @@ class Puzzle: #  represents an 8 puzzle
     @property
     def manhattan(self):
         distance = 0
-        for i in range(3):
-            for j in range(3):
+        b_param =0
+        if len(board) == 3:
+            b_param = 3
+        elif len(board) == 4:
+            b_param =4
+        else:
+            print("Not valid board!")
+
+        for i in range(b_param):
+            for j in range(b_param):
                 if self.board[i][j] != 0:
-                    x, y = divmod(self.board[i][j] - 1, 3)
+                    x, y = divmod(self.board[i][j] - 1, b_param)
                     distance += abs(x - i) + abs(y - j)
         return distance
     
@@ -154,13 +162,24 @@ class Puzzle: #  represents an 8 puzzle
         for row in self.board:
             yield from row
 
-print('8-Puzzle A* Solver')
-print('Enter the puzzle you want to solve like this \'1 2 3 4 5 6 7 8 0\' with \'0\' being the empty space')
-puzzle = [int(x) for x in input().split()]
-board = [puzzle[0:3], puzzle[3:6], puzzle[6:9]]
-#board = [[2,0,5],[8,3,4],[7,6,1]]
+desicion = ' '
+while desicion != 8 or desicion !=15:
+    desicion = int(input("Should it be 8 puzzle or 15 puzzle? Enter 8 or 15."))
+    if desicion == 8:
+        print('8-Puzzle A* Solver')
+        print('Enter the puzzle you want to solve like this \'1 2 3 4 5 6 7 8 0\' with \'0\' being the empty space')
+        puzzle = [int(x) for x in input().split()]
+        board = [puzzle[0:3], puzzle[3:6], puzzle[6:9]]
+        #board = [[2,0,5],[8,3,4],[7,6,1]]
+    elif desicion == 15:
+        print('15-Puzzle A* Solver')
+        print('Enter the puzzle you want to solve like this \'1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0\' with \'0\' being the empty space')
+        puzzle = [int(x) for x in input().split()]
+        board = [puzzle[0:4], puzzle[4:8], puzzle[8:12], puzzle[12:16]]
+    else:
+        print("Invalid input. Try again.")
+
 puzzle = Puzzle(board)
-#puzzle = puzzle.shuffle()
 s = Solver(puzzle)
 tic = time.time()
 p = s.solve()
